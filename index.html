@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Delizioso Restaurant</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans&display=swap');
+
+  :root {
+    --primary-color: #d35400;
+    --accent-color: #e67e22;
+    --dark-color: #2c3e50;
+    --light-color: #ecf0f1;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Open Sans', sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    background-color: var(--light-color);
+    color: var(--dark-color);
+    scroll-behavior: smooth;
+  }
+
+  header {
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+  }
+
+  .logo {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.75rem;
+    cursor: default;
+    letter-spacing: 0.07em;
+  }
+
+  nav a {
+    color: var(--light-color);
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 1.5rem;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+
+  nav a:hover {
+    color: var(--accent-color);
+  }
+
+  main {
+    padding-top: 60px;
+  }
+
+  /* Hero Section */
+  #hero {
+    background: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1350&q=80') center center/cover no-repeat;
+    height: 80vh;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+  #hero h1 {
+    font-family: var(--font-heading);
+    font-size: 3.75rem;
+    margin: 0;
+    text-shadow: 0 5px 15px rgba(0,0,0,0.6);
+  }
+
+  #hero p {
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+    font-weight: 600;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.6);
+  }
+
+  #hero button {
+    margin-top: 2rem;
+    background-color: var(--primary-color);
+    border: none;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(211, 84, 0, 0.6);
+    transition: background-color 0.3s ease;
+  }
+
+  #hero button:hover {
+    background-color: var(--accent-color);
+  }
+
+  /* Sections */
+  section {
+    padding: 4rem 1rem;
+    max-width: 900px;
+    margin: 0 auto 3rem;
+  }
+
+  section h2 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--dark-color);
+    letter-spacing: 0.07em;
+  }
+
+  section p {
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+    color: #444;
+  }
+
+  /* Menu */
+  #menu .menu-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+    gap: 1.75rem;
+    margin-top: 2rem;
+  }
+
+  .menu-item {
+    background-color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .menu-item:hover {
+    box-shadow: 0 8px 25px rgba(211, 84, 0, 0.5);
+  }
+
+  .menu-item h3 {
+    margin-top: 0;
+    margin-bottom: 0.3rem;
+    font-family: var(--font-heading);
+    color: var(--primary-color);
+  }
+
+  .menu-item p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #555;
+    display: none;
+    margin-top: 0.5rem;
+  }
+
+  .menu-item.expanded p {
+    display: block;
+  }
+
+  /* Reservation */
+  #reservation {
+    background: #f9f4ef;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  #reservation h2 {
+    color: var(--dark-color);
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem 2rem;
+  }
+
+  label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--dark-color);
+  }
+
+  input, select, button {
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+  }
+
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+  }
+
+  button {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(211, 84, 0, 0.6);
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: var(--accent-color);
+  }
+
+  /* Contact */
+  #contact p {
+    text-align: center;
+    font-size: 1rem;
+    color: #555;
+  }
+
+  #contact a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  #contact a:hover {
+    text-decoration: underline;
+  }
+
+  /* Footer */
+  footer {
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    text-align: center;
+    padding: 1rem 1rem;
+    font-size: 0.9rem;
+    user-select: none;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    #hero h1 {
+      font-size: 2.5rem;
+    }
+
+    #hero p {
+      font-size: 1rem;
+    }
+
+    nav a {
+      font-size: 0.9rem;
+      margin-left: 0.8rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <nav>
+      <div class="logo">Delizioso</div>
+      <div>
+        <a href="#hero">Home</a>
+        <a href="#about">About</a>
+        <a href="#menu">Menu</a>
+        <a href="#reservation">Reservation</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section id="hero">
+    <h1>Welcome to Delizioso</h1>
+    <p>Authentic Italian flavors served with love</p>
+    <button id="reserveBtn">Reserve a Table</button>
+  </section>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p>
+      At Delizioso, we bring you the finest Italian cuisine crafted by passionate chefs. Our warm and inviting atmosphere is perfect for family dinners, cozy dates, or celebrations. We source fresh, local ingredients to deliver authentic taste with every bite.
+    </p>
+  </section>
+
+  <section id="menu">
+    <h2>Our Menu Highlights</h2>
+    <div class="menu-items">
+      <div class="menu-item" tabindex="0">
+        <h3>Margherita Pizza</h3>
+        <p>Classic pizza with fresh mozzarella, basil, and our signature tomato sauce baked to perfection.</p>
+      </div>
+      <div class="menu-item" tabindex="0">
+        <h3>Tagliatelle Bolognese</h3>
+        <p>Homemade pasta tossed in a rich meat sauce simmered all day for deep flavor.</p>
+      </div>
+      <div class="menu-item" tabindex="0">
+        <h3>Caprese Salad</h3>
+        <p>Fresh tomatoes, mozzarella, basil, drizzled with extra virgin olive oil and balsamic glaze.</p>
+      </div>
+      <div class="menu-item" tabindex="0">
+        <h3>Tiramisu</h3>
+        <p>Traditional Italian dessert layered with espresso-soaked ladyfingers and mascarpone cream.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="reservation">
+    <h2>Make a Reservation</h2>
+    <form id="reservationForm" aria-label="Reservation form">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Your full name" required />
+
+      <label for="date">Date</label>
+      <input type="date" id="date" name="date" required />
+
+      <label for="time">Time</label>
+      <input type="time" id="time" name="time" required />
+
+      <label for="people">Number of People</label>
+      <select id="people" name="people" required>
+        <option value="" disabled selected>Select</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5+</option>
+      </select>
+
+      <button type="submit">Reserve Now</button>
+    </form>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>123 Flavor Avenue, Foodie City, FT 45678</p>
+    <p>Phone: <a href="tel:+1234567890">+1 (234) 567-890</a></p>
+    <p>Email: <a href="mailto:info@delizioso.com">info@delizioso.com</a></p>
+  </section>
+</main>
+
+<footer>
+  &copy; 2024 Delizioso Restaurant. All rights reserved.
+</footer>
+
+<script>
+  // Menu items toggle description on click or keyboard focus with Enter
+  const menuItems = document.querySelectorAll('.menu-item');
+  menuItems.forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('expanded');
+    });
+    item.addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        item.classList.toggle('expanded');
+      }
+    });
+  });
+
+  // Scroll to reservation section when button clicked
+  document.getElementById('reserveBtn').addEventListener('click', () => {
+    document.getElementById('reservation').scrollIntoView({behavior: 'smooth'});
+  });
+
+  // Reservation form submission simulation
+  document.getElementById('reservationForm').addEventListener('submit', e => {
+    e.preventDefault();
+    alert('Thank you, ' + e.target.name.value + '! Your reservation request has been received.');
+    e.target.reset();
+  });
+</script>
+
+</body>
+</html>
+
